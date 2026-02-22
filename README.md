@@ -1,78 +1,260 @@
-# 크롬 커스텀 시작 페이지 대시보드
+🌏 [한국어](README.ko.md) | [English](README.md)
 
-개인화된 바탕화면과 북마크를 제공하는 크롬 시작 페이지 전용 대시보드입니다.
-자주 사용하는 웹사이트들을 용도에 맞게 분류해두고 세계 시간, 달력, 간단한 메모 기능을 함께 이용할 수 있습니다.
-사용자 개인의 PC 구동 환경에 맞춰 로컬 서버를 동작시키는 방식을 채택하여 민감한 개인 북마크나 메모 기록이 외부 서버로 유출될 우려가 없습니다.
+# Chrome Starting Page Dashboard v1.0
 
-## 주요 기능
+> Your personal Chrome start page dashboard — runs locally on Node.js with zero external dependencies.
 
-- 반투명한 글래스모피즘(Glassmorphism) 기반의 깔끔한 디자인 인터페이스
-- 업무에 필요한 복수의 글로벌 시간대(Timezone)를 설정할 수 있는 세계 시계
-- 실시간 월간 달력 및 일상적인 텍스트 기록을 위한 메모장 지원
-- 구글, 깃허브, 노션 등 즐겨찾기 사이트의 파비콘(아이콘) 자동 연계 설정
-- 사용자 개인 설정과 코어 템플릿의 분리로 깃허브(Github) 등 버전 관리 시 안전한 데이터 보호
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Node.js](https://img.shields.io/badge/Node.js-≥18-339933?logo=node.js&logoColor=white)](https://nodejs.org)
+[![No Dependencies](https://img.shields.io/badge/Dependencies-None-brightgreen)](package.json)
 
-## 각 기능 사용법
+## 📋 Overview
 
-대시보드에 탑재된 다양한 위젯과 기능들은 다음과 같이 활용하실 수 있습니다.
+A fully-featured Chrome start page dashboard that runs on a local Node.js server. All data stays on your machine — no external servers, no data transmission, no accounts needed. Bookmark management, notes, todos, calendar, habit tracking, and more, all wrapped in a customizable glassmorphism UI.
 
-### 1. 북마크 사이트 관리 및 백그라운드 이미지 변경
+Forked and extensively upgraded from the original [chrome-starting-page](https://github.com/sodam-AI/chrome-starting-page) project.
 
-- **설정 모달 진입하기**: 화면 우측 상단의 작은 `톱니바퀴` 아이콘을 클릭하시면 관리 메뉴가 팝업됩니다.
-- **북마크 추가/수정**: 설정 창에서 기존 폴더명 아래 새로운 URL과 사이트 이름을 입력하여 간편하게 추가할 수 있습니다. 아이콘은 URL을 통해 Google Favicon API에서 자동으로 가져옵니다. 필요 없는 사이트는 제목 옆의 휴지통 모양 아이콘을 클릭하여 삭제합니다. 카테고리(폴더)가 숨겨진 상태에서 편집할 수도 있고, 눈 모양 아이콘을 통해 대시보드에서 아예 숨길 수도 있습니다.
-- **배경화면(배경) 변경**: 설정 창 상단의 `Background Image URL` 입력칸에 원하시는 고해상도 이미지의 웹 URL 링크(예: Unsplash 이미지 주소 등)를 입력하고 하단의 Save 버튼을 누르시면, 기본 다크 그라데이션 내장 배경이 해당 이미지로 즉시 교체됩니다.
+## ✨ Features
 
-### 2. 달력(Calendar) 및 투두(Todo) 리스트 연동 기능
+- **Spotlight Search** — unified search across bookmarks, todos, notes, and D-Days with Korean initial consonant support (`Ctrl+F`)
+- **Keyword Quick Search** — type `yt query`, `nv query`, `gh query` to search YouTube, Naver, GitHub instantly
+- **Multi-Card System** — Bookmark, Notepad, Todo, Calendar, and Habit cards with drag & drop reordering
+- **Multi-Page Tabs** — organize cards into separate pages with tab navigation
+- **Smart Bookmarks** — drag & drop from browser, duplicate detection, NEW badges, cross-card movement
+- **Theme Engine** — dark/light/auto modes, 8 accent colors, glass effect presets, background slideshow
+- **Auto Backup** — smart retention policy (7-day full → 30-day daily → auto-delete, max 50 files)
+- **Offline Support** — Service Worker caching keeps the dashboard viewable even when the server is down
+- **Weather & D-Day** — current weather display and countdown to important dates
+- **Pomodoro Timer** — built-in focus timer with statistics tracking
+- **Profile Management** — save and switch between multiple configurations
+- **Zero Dependencies** — pure Node.js built-in modules, no npm packages required
 
-- **월 변경 내비게이션**: 캘린더 우측 상단에 표시된 현재 월 이름 양옆의 화살표 (`<`, `>`)를 클릭하시면 이전 달이나 다음 달로 날짜를 자유롭게 탐색할 수 있습니다.
-- **날짜별 스마트 투두 리스트**: 달력 위 원하는 일자를 클릭하면, 해당 날짜 전용 할 일(Todo) 관리 모달이 뜹니다. 하루 최대 5개까지 세부 일정을 기록하고 체크박스로 달성 여부를 체크할 수 있습니다.
-- **스케줄러 닷(Dot) 인디케이터**: 투두 단 하나라도 등록된 일자가 있다면 캘린더 해당 숫자 하단에 작고 선명한 주황색 점(Dot)이 찍혀, 어느 날짜에 일정이 존재하는지 직관적으로 인지할 수 있습니다.
+## 🛠️ Tech Stack
 
-### 3. 멀티 타임존 글로벌 시계(Clocks)
+| Category | Technology |
+|---|---|
+| Server | Node.js ≥ 18 (built-in modules only, no npm packages) |
+| Frontend | Vanilla JavaScript + CSS (no frameworks) |
+| Data Storage | Local JSON files (`data/` directory) |
+| Caching | Service Worker |
+| Port | 1111 (configurable) |
 
-- 전 세계 런던, 뉴욕, 도쿄 등 다양한 도시의 현재 시간을 동시에 볼 수 있습니다. 현재 시간은 운영 체제의 시계와 맞춰 실시간으로 초 단위까지 보여집니다. 표기할 도시와 타임존 코드는 설정 메뉴 하단 영역의 `Global Clocks` 항목에서 자유롭게 추가, 편집, 삭제가 가능합니다.
+## 📦 Prerequisites
 
-### 4. 퀵 구글링 및 탭 이동식 검색
+- **Node.js** v18 or higher — [Download LTS](https://nodejs.org)
+- Verify installation: `node -v` → should show `v18.x.x` or higher
 
-- 화면 중앙 상단 검색바 좌측의 로고(초기화면 구글 탑재)를 클릭해 보세요. 구글(G) -> 네이버(N) -> 유튜브(Y) 순서대로 아이콘과 검색 모드가 순환됩니다. 원하시는 엔진으로 모드를 고정해 둔 상태에서 검색어를 입력하고 Enter(엔터) 키를 치시면 새 탭 없이 바로 원하는 통합 검색 결과 페이지로 신속히 안내합니다.
+## 🚀 Installation
 
-### 5. 글래스모피즘(Glassmorphism) 메모장 위젯
+### Windows (Recommended: Auto Setup)
 
-- 단기적인 기록이 필요한 생각이나 문구는 달력 좌측의 노트 공간(Notepad 1, Notepad 2)에 자유롭게 입력해두실 수 있습니다.
-- 마우스를 올리고 클릭하여 바로 타이핑이 가능하며 글자는 자동으로 사용자 PC(로컬 파일)에 백그라운드 보관되어 브라우저를 껐다 켜도 날아가지 않습니다. 선명하고 몽환적인 유리 질감의 패널 위에 떠 있는 듯한 고급스러운 느낌을 체감할 수 있습니다.
+1. Place the project folder where you want it (e.g., `C:\Users\YourName\Dashboard`)
+2. Double-click `setup_windows.bat`
+3. When complete, open `http://localhost:1111`
 
-## 자동 배포 및 실행 방법
+The auto setup will check Node.js, start the server in background, and register it to Windows Startup.
 
-크롬을 켰을 때 이 대시보드가 구동되려면 PC가 켜질 때마다 백그라운드에서 로컬 서버가 알아서 돌아가야 합니다. 이를 바탕으로 OS별로 간단하게 세팅할 수 있는 자동화 스크립트를 제공합니다.
+### macOS (Recommended: Auto Setup)
 
-### macOS 사용자
+```bash
+cd ~/Dashboard
+chmod +x setup_mac.sh
+./setup_mac.sh
+```
 
-1. 터미널을 열고 본 프로젝트가 다운로드된 폴더로 이동합니다.
-2. 아래 명령어를 통해 setup 쉘 파일(setup_mac.sh)을 실행합니다.
-   ```bash
-   sh setup_mac.sh
-   ```
-   이 과정에서 백그라운드 구동을 위한 LaunchAgent 권한이 등록됩니다.
-3. 브라우저를 열고 `http://localhost:1111` 에 접속하여 화면이 제대로 나오는지 확인합니다.
+The auto setup will check Node.js, register a macOS LaunchAgent, and start the server.
 
-### Windows 사용자
+### Linux
 
-1. 다운로드 받은 프로젝트 폴더를 엽니다.
-2. 리스트에 있는 `setup_windows.bat` 설정용 배치 파일을 더블클릭하여 바로 실행합니다.
-3. 컴퓨터의 시작 프로그램 폴더에 자동으로 숨김 서버 옵션(VBScript)을 탑재한 바로가기가 생성됩니다.
-4. 브라우저 창에서 `http://localhost:1111` 로 이동해 초기 화면이 로딩되는지 확인합니다.
+```bash
+cd ~/Dashboard
+node server.js
+```
 
-## 크롬 시작 화면으로 고정하기
+For auto-start, register a systemd service:
 
-서버 배포가 끝났다면 이제 크롬을 켤 때마다 자동으로 첫 화면에 보이도록 아래와 같이 설정합니다.
+```bash
+sudo tee /etc/systemd/system/dashboard.service << EOF
+[Unit]
+Description=Chrome Starting Page Dashboard
+After=network.target
 
-1. 크롬 우측 상단의 점 세개 모양 아이콘(세트 햄버거 메뉴)을 눌러 '설정'으로 들어갑니다.
-2. 좌측 사이드바 메뉴 메뉴에서 '시작 그룹' 항목을 선택합니다.
-3. '특정 페이지 또는 페이지 모음 열기'를 누릅니다.
-4. '새 페이지 추가'를 누른 다음 URL 경로에 `http://localhost:1111` 을 정확히 입력하고 적용합니다.
+[Service]
+Type=simple
+User=$USER
+WorkingDirectory=$HOME/Dashboard
+ExecStart=$(which node) server.js
+Restart=on-failure
 
-## 개인 데이터 보호 안내
+[Install]
+WantedBy=multi-user.target
+EOF
 
-프로젝트 클론을 받은 최초 시점에는 코어에 있는 기본 예시 템플릿(`bookmarks.default.json`) 요소들이 보여집니다.
-이후 브라우저의 톱니바퀴 관리 버튼에서 나만의 북마크나 옵션으로 수정하면 하위에 `data/bookmarks.json` 이 자동으로 생성되어 여러분의 정보가 안전하게 저장됩니다.
-이 폴더의 개인 기록 파일은 Github 커밋 목록에서 제외되도록 미리 마스킹(gitignore) 처리를 해 두었으니, 편안한 마음으로 개인 설정들을 포크(Fork)하여 관리하셔도 됩니다.
+sudo systemctl enable dashboard
+sudo systemctl start dashboard
+```
+
+### Manual Start (All Platforms)
+
+```bash
+cd /path/to/Dashboard
+node server.js
+```
+
+The terminal will show `[Dashboard v7.2] http://localhost:1111/` when ready.
+
+## 💻 Usage
+
+### Set as Chrome Start Page
+
+1. Navigate to `chrome://settings/onStartup`
+2. Select **"Open a specific page or set of pages"**
+3. Click **"Add a new page"** → enter `http://localhost:1111`
+
+Optional: Install [New Tab Redirect](https://chromewebstore.google.com/detail/new-tab-redirect/icpgjfneehieebagbmdbhnlpiopdcmna) extension and set redirect URL to `http://localhost:1111` for new tabs.
+
+### Keyboard Shortcuts
+
+| Shortcut | Action |
+|---|---|
+| `/` or `Ctrl+K` | Focus search bar |
+| `S` | Open settings |
+| `E` | Toggle edit mode |
+| `T` | Toggle theme (dark/light) |
+| `Ctrl+F` | Spotlight search (search all bookmarks/todos/notes/D-Days) |
+| `1`–`9` | Open nth bookmark in first card |
+
+### Search
+
+- **Default**: Type in search bar + Enter (switchable between Google/Naver/YouTube)
+- **Keywords**: `yt query`, `nv query`, `gh query`, `g query`, `tw query`, `map query`
+- **Spotlight**: `Ctrl+F` for unified search with Korean initial consonant support (`ㅈㅁ` → "지메일")
+- **Commands**: Type `>` in Spotlight for commands (`todo`, `timer`, `edit`, `focus`)
+
+### Bookmark Management
+
+- **Add**: Click + button in edit mode, or drag a URL from browser onto a card
+- **Reorder**: Drag & drop within a card
+- **Move**: Drag bookmark to another card
+- **Delete**: Hover → click × (undo supported)
+- **Duplicates**: Settings → Data → "Check Duplicate URLs"
+- **NEW Badge**: Auto-shown for 7 days on new bookmarks
+
+### Card Types
+
+- **Bookmark Card** — favorite link collections
+- **Notepad Card** — quick notes (multiple cards supported)
+- **Todo Card** — tasks with priority, tags, due dates, recurring (multiple cards supported)
+- **Calendar Card** — monthly/weekly calendar with event management
+- **Habit Card** — daily habit checklist
+
+### Card Management
+
+- **Add/Remove**: + button at bottom / × button on card (undo supported)
+- **Collapse**: Click card title (state persists across sessions)
+- **Resize**: Toggle 1x/2x in edit mode
+- **Reorder**: Drag via ⠿ handle on left
+- **Color**: Set per-card background color in edit mode
+
+### Settings (`S` key)
+
+- **Theme**: Dark / Light / Auto, 8 accent colors
+- **Glass Effect**: Transparency, blur intensity, presets (Transparent/Default/Opaque)
+- **Background**: Solid color, image upload, slideshow
+- **Weather**: Enter city name for current weather display
+- **Search**: Change default engine, custom keyword search
+- **D-Day**: Countdown to important dates
+- **Data**: Export/Import, profiles, duplicate check, trash
+
+## ⚙️ How It Works
+
+The dashboard runs a lightweight Node.js HTTP server on port 1111 that serves static files and provides a REST API for data persistence. All user data is stored as JSON files in the `data/` directory. The frontend is pure vanilla JavaScript and CSS — no build step, no bundling, no framework.
+
+Key architectural decisions:
+- **Zero npm dependencies** — the server uses only Node.js built-in `http`, `fs`, and `path` modules
+- **Service Worker** — caches pages for offline access even when the server is stopped
+- **Smart backup** — automatic periodic backups with a retention policy that keeps recent backups and prunes old ones
+- **3-tier favicon** — Google Favicon → DuckDuckGo → auto-generated colored letter icons
+
+## 📁 Project Structure
+
+```
+Dashboard/
+├── data/                       ← All user data (auto-managed)
+│   ├── bookmarks.json          ← Bookmarks
+│   ├── config.json             ← Settings
+│   ├── notes.json              ← Notes
+│   ├── todos.json              ← Todos
+│   ├── events.json             ← Calendar events
+│   ├── ddays.json              ← D-Day countdowns
+│   ├── usage.json              ← Usage statistics
+│   ├── trash.json              ← Trash / recycle bin
+│   ├── pomo-stats.json         ← Pomodoro statistics
+│   ├── icons/                  ← Uploaded icons
+│   ├── profiles/               ← Profile data
+│   └── backups/                ← Auto backups (smart retention)
+├── assets/                     ← Background images, PWA icons
+├── server.js                   ← Server (edit only for port change)
+├── index.html                  ← Page structure
+├── style.css                   ← Styles (themes, glass effects, animations)
+├── script.js                   ← Feature logic (2,800+ lines)
+├── restart.bat                 ← Server restart (Windows)
+├── run_server_background.bat   ← Background execution (Windows startup)
+├── setup_windows.bat           ← Windows auto setup
+└── setup_mac.sh                ← macOS auto setup
+```
+
+## 🔒 Security
+
+- All data is stored locally — nothing is transmitted externally
+- No system registry modifications
+- No global config files or hidden folders outside the project
+- The server only listens on `localhost:1111` — not accessible from other devices
+- Memory usage is ~15MB when idle
+- Works offline (except weather widget)
+
+## 🔧 Troubleshooting
+
+| Symptom | Cause | Solution |
+|---|---|---|
+| "Port 1111 already in use" | Previous server still running | Double-click `restart.bat` (Windows) or `kill` the process |
+| Server won't start | Node.js not installed | Run `node -v` to verify, install from [nodejs.org](https://nodejs.org) |
+| Page not showing | Wrong URL protocol | Use `http://localhost:1111` (not https) |
+| Data not saving | Server connection lost | Restart server; check write permissions on `data/` |
+| Bookmark icons missing | Favicon fetch failed | Auto-fallback: Google → DuckDuckGo → colored letters |
+
+## 🗑️ Complete Uninstall
+
+This program only needs two things removed: the project folder and the auto-start registration. It leaves nothing in system registry, global configs, or hidden folders.
+
+**Windows:**
+```bash
+# 1. Remove auto-start
+del "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\Dashboard_StartPage.lnk"
+# 2. Stop server
+taskkill /f /im node.exe
+# 3. Delete project folder
+# 4. Remove http://localhost:1111 from chrome://settings/onStartup
+```
+
+**macOS:**
+```bash
+launchctl unload ~/Library/LaunchAgents/com.dashboard.startpage.plist
+rm ~/Library/LaunchAgents/com.dashboard.startpage.plist
+rm -rf ~/Dashboard
+```
+
+**Linux (systemd):**
+```bash
+sudo systemctl stop dashboard && sudo systemctl disable dashboard
+sudo rm /etc/systemd/system/dashboard.service && sudo systemctl daemon-reload
+rm -rf ~/Dashboard
+```
+
+## 🙏 Acknowledgments
+
+- Original project: [sodam-AI/chrome-starting-page](https://github.com/sodam-AI/chrome-starting-page)
+
+## 📄 License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
